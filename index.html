@@ -1,0 +1,90 @@
+<!-- ========================= index.html ========================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zach McEwen | Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <h1>Zach McEwen</h1>
+        <span>Engineering Portfolio</span>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-secondary" href="#projects">Projects</a>
+        <a class="btn btn-primary" href="mailto:Zachm309@gmail.com">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card">
+          <div class="eyebrow">Electronics Systems Engineering</div>
+          <h2>Project work; Photos and Videos.</h2>
+          <p>
+            A simple homepage that lets employers browse projects quickly, then open a dedicated page for each one to view photos and videos.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h3>Selected Projects</h3>
+            <p>Each project opens to its own gallery-style page.</p>
+          </div>
+        </div>
+
+        <div class="project-grid">
+          <a class="project-card" href="fsae-can-system.html">
+            <div class="project-thumb">
+              <img src="media/fsae/CFE.png" alt="FSAE EV Electrical and CAN System thumbnail" />
+            </div>
+            <div class="project-content">
+              <div class="project-tag">Formula SAE</div>
+              <h4>FSAE EV Electrical &amp; CAN System</h4>
+              <p>Accumulator, grounded low-voltage system, CAN diagnostics, and electrical integration.</p>
+            </div>
+          </a>
+
+          <a class="project-card" href="scout-capstone.html">
+            <div class="project-thumb">
+              <img src="media/scout/SCOUT.png" alt="SCOUT capstone thumbnail" />
+            </div>
+            <div class="project-content">
+              <div class="project-tag">Capstone Project</div>
+              <h4>SCOUT Sensor Mesh</h4>
+              <p>Embedded nodes, PCB design, firmware, sensing, and building analytics visualization.</p>
+            </div>
+          </a>
+
+          <a class="project-card" href="robot-vision.html">
+            <div class="project-thumb">
+              <img src="media/robot/thumbnail.jpg" alt="Robot vision project thumbnail" />
+            </div>
+            <div class="project-content">
+              <div class="project-tag">Embedded Vision</div>
+              <h4>Robot Vision &amp; Edge Detection</h4>
+              <p>Live camera streaming, edge detection, line tracking, and embedded system testing.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Replace the image paths with your own project media and duplicate a project page whenever you want to add more projects.
+    </div>
+  </footer>
+</body>
+</html>

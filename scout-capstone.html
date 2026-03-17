@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCOUT Sensor Mesh | Zach McEwen</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <h1>Zach McEwen</h1>
+        <span>Engineering Portfolio</span>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-secondary" href="index.html">Home</a>
+        <a class="btn btn-primary" href="mailto:Zachm309@gmail.com">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <div class="container">
+
+      <div class="page-actions">
+        <a class="btn btn-secondary" href="index.html">← Back to Projects</a>
+      </div>
+
+      <section class="page-hero">
+        <div class="eyebrow">Capstone Project</div>
+        <h2>SCOUT Sensor Mesh</h2>
+        <p>
+          SCOUT is an active capstone project currently still in progress. This page highlights the system architecture,
+          embedded node design, data flow, enclosure concept, and schematic development completed so far.
+        </p>
+      </section>
+
+      <section class="gallery-grid">
+
+        <article class="media-card">
+          <div class="media-frame">
+            <img src="media/scout/CUE_BD.png" alt="SCOUT CUE block diagram" />
+          </div>
+          <div class="media-caption">
+            <h4>CUE Block Diagram</h4>
+            <p>High-level system view showing the cloud or upper-level software environment and its relation to the full SCOUT platform.</p>
+          </div>
+        </article>
+
+        <article class="media-card">
+          <div class="media-frame">
+            <img src="media/scout/Data_Flow.png" alt="SCOUT data flow diagram" />
+          </div>
+          <div class="media-caption">
+            <h4>System Data Flow</h4>
+            <p>Overview of how sensing data moves through the network from embedded nodes toward higher-level processing and reporting.</p>
+          </div>
+        </article>
+
+        <article class="media-card full">
+          <div class="media-frame">
+            <img src="media/scout/EMN_BD.png" alt="Embedded monitoring node block diagram" />
+          </div>
+          <div class="media-caption">
+            <h4>Embedded Monitoring Node Block Diagram</h4>
+            <p>Main functional architecture of the embedded monitoring node, showing the core hardware building blocks and subsystem connections.</p>
+          </div>
+        </article>
+
+        <article class="media-card">
+          <div class="media-frame">
+            <img src="media/scout/EMN_Container.png" alt="Embedded monitoring node enclosure concept" />
+          </div>
+          <div class="media-caption">
+            <h4>EMN Enclosure Concept</h4>
+            <p>Preliminary enclosure view for the embedded monitoring node, showing how the hardware may be packaged for deployment.</p>
+          </div>
+        </article>
+
+        <article class="media-card">
+          <div class="media-frame">
+            <img src="media/scout/EMN_Schematic1.png" alt="Embedded monitoring node schematic" />
+          </div>
+          <div class="media-caption">
+            <h4>EMN Schematic Development 1/2</h4>
+            <p>Early schematic capture for the embedded monitoring node showing electrical design progress and subsystem integration.</p>
+          </div>
+        </article>
+
+		<article class="media-card">
+          <div class="media-frame">
+            <img src="media/scout/EMN_Schematic1.png" alt="Embedded monitoring node schematic" />
+          </div>
+          <div class="media-caption">
+            <h4>EMN Schematic Development 2/2</h4>
+            <p>Early schematic capture for the connectors of the board.</p>
+          </div>
+        </article>
+
+
+
+      </section>
+    </div>
+  </main>
+
+  <!-- =========================================================
+       FULLSCREEN IMAGE VIEWER / LIGHTBOX
+       This only applies to images, not videos.
+       ========================================================= -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close viewer">&times;</button>
+
+    <button class="lightbox-arrow lightbox-arrow-left" id="lightboxPrev" aria-label="Previous image">
+      &#10094;
+    </button>
+
+    <div class="lightbox-content">
+      <img id="lightboxImage" src="" alt="" />
+
+      <div class="lightbox-caption">
+        <h3 id="lightboxTitle"></h3>
+        <p id="lightboxDescription"></p>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+      </div>
+    </div>
+
+    <button class="lightbox-arrow lightbox-arrow-right" id="lightboxNext" aria-label="Next image">
+      &#10095;
+    </button>
+  </div>
+
+  <script>
+    /* =========================================================
+       SCOUT PAGE LIGHTBOX SCRIPT
+       ---------------------------------------------------------
+       This script enables fullscreen image viewing for all
+       gallery photos on this page.
+
+       HOW IT WORKS:
+       1. It finds every image inside the gallery cards.
+       2. It reads the image path, title, and description
+          directly from the existing HTML.
+       3. When a user clicks a photo, that photo opens in a
+          fullscreen modal.
+       4. The left/right arrows move through the image set.
+       5. The title, description, and image counter update
+          automatically as the active image changes.
+       ========================================================= */
+
+    const galleryImages = document.querySelectorAll(".gallery-grid .media-card img");
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const lightboxTitle = document.getElementById("lightboxTitle");
+    const lightboxDescription = document.getElementById("lightboxDescription");
+    const lightboxCounter = document.getElementById("lightboxCounter");
+    const lightboxClose = document.getElementById("lightboxClose");
+    const lightboxPrev = document.getElementById("lightboxPrev");
+    const lightboxNext = document.getElementById("lightboxNext");
+
+    const imageData = Array.from(galleryImages).map((img) => {
+      const mediaCard = img.closest(".media-card");
+      const titleElement = mediaCard.querySelector(".media-caption h4");
+      const descriptionElement = mediaCard.querySelector(".media-caption p");
+
+      return {
+        src: img.getAttribute("src"),
+        alt: img.getAttribute("alt") || "",
+        title: titleElement ? titleElement.textContent : "",
+        description: descriptionElement ? descriptionElement.textContent : ""
+      };
+    });
+
+    let currentImageIndex = 0;
+
+    function showImage(index) {
+      if (index < 0) {
+        currentImageIndex = imageData.length - 1;
+      } else if (index >= imageData.length) {
+        currentImageIndex = 0;
+      } else {
+        currentImageIndex = index;
+      }
+
+      const currentImage = imageData[currentImageIndex];
+
+      lightboxImage.src = currentImage.src;
+      lightboxImage.alt = currentImage.alt;
+      lightboxTitle.textContent = currentImage.title;
+      lightboxDescription.textContent = currentImage.description;
+      lightboxCounter.textContent = `${currentImageIndex + 1} / ${imageData.length}`;
+    }
+
+    function openLightbox(index) {
+      showImage(index);
+      lightbox.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    galleryImages.forEach((img, index) => {
+      img.addEventListener("click", () => {
+        openLightbox(index);
+      });
+    });
+
+    lightboxPrev.addEventListener("click", () => {
+      showImage(currentImageIndex - 1);
+    });
+
+    lightboxNext.addEventListener("click", () => {
+      showImage(currentImageIndex + 1);
+    });
+
+    lightboxClose.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("active")) return;
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      } else if (event.key === "ArrowLeft") {
+        showImage(currentImageIndex - 1);
+      } else if (event.key === "ArrowRight") {
+        showImage(currentImageIndex + 1);
+      }
+    });
+  </script>
+
+</body>
+</html>

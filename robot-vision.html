@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robot Vision & Edge Detection | Zach McEwen</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <h1>Zach McEwen</h1>
+      <span>Engineering Portfolio</span>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-secondary" href="index.html">Home</a>
+      <a class="btn btn-primary" href="mailto:Zachm309@gmail.com">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page-shell">
+<div class="container">
+
+<div class="page-actions">
+<a class="btn btn-secondary" href="index.html">← Back to Projects</a>
+</div>
+
+<section class="page-hero">
+<div class="eyebrow">Embedded Vision</div>
+<h2>Robot Vision & Edge Detection</h2>
+<p>
+Real-time vision system using camera streaming, edge detection, and line tracking.
+This project demonstrates embedded processing, sensor integration, and control feedback.
+</p>
+</section>
+
+<section class="gallery-grid">
+
+<!-- Robot Demo Video -->
+<article class="media-card full">
+<div class="media-frame">
+<video controls preload="metadata">
+<source src="media/robot/demo.mov" type="video/mp4">
+</video>
+</div>
+<div class="media-caption">
+<h4>Robot Movement Demo</h4>
+<p>Demonstration of the robot responding to visual input and executing movement control.</p>
+</div>
+</article>
+
+<!-- Gesture / Vision Output -->
+<article class="media-card">
+  <div class="media-frame">
+    <video controls preload="metadata">
+      <source src="media/robot/hand_gestures.mp4" type="video/mp4">
+      Your browser does not support video playback.
+    </video>
+  </div>
+  <div class="media-caption">
+    <h4>Gesture Recognition Demo</h4>
+    <p>Vision system detecting and interpreting hand gestures using real-time image processing.</p>
+  </div>
+</article>
+
+<!-- Hardware -->
+<article class="media-card">
+<div class="media-frame">
+<img src="media/robot/IMG_6988.JPG" alt="Robot hardware setup" />
+</div>
+<div class="media-caption">
+<h4>Hardware Setup</h4>
+<p>Embedded system and sensor configuration used for real-time vision processing.</p>
+</div>
+</article>
+
+<article class="media-card">
+<div class="media-frame">
+<img src="media/robot/IMG_6989.JPG" alt="Controller hardware" />
+</div>
+<div class="media-caption">
+<h4>Custom PCB</h4>
+<p>A PCB stackup I designed, had manufactured and assembled myself for this project.</p>
+</div>
+</article>
+
+<!-- Perf Board -->
+<article class="media-card">
+<div class="media-frame">
+<img src="media/robot/perf_board.jpg" alt="Perf board circuit" />
+</div>
+<div class="media-caption">
+<h4>Custom Circuit Board</h4>
+<p>Hand-built perf board used for signal routing and rapid prototyping.</p>
+</div>
+</article>
+
+<article class="media-card">
+<div class="media-frame">
+<img src="media/robot/perf_board2.jpg" alt="Perf board wiring detail" />
+</div>
+<div class="media-caption">
+<h4>Wiring Detail</h4>
+<p>Close-up view showing wiring layout and hardware integration.</p>
+</div>
+</article>
+
+</section>
+
+</div>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&times;</button>
+
+  <button class="lightbox-arrow lightbox-arrow-left" id="lightboxPrev">&#10094;</button>
+
+  <div class="lightbox-content">
+    <img id="lightboxImage" src="" alt="" />
+
+    <div class="lightbox-caption">
+      <h3 id="lightboxTitle"></h3>
+      <p id="lightboxDescription"></p>
+      <div id="lightboxCounter"></div>
+    </div>
+  </div>
+
+  <button class="lightbox-arrow lightbox-arrow-right" id="lightboxNext">&#10095;</button>
+</div>
+
+<script>
+const galleryImages = document.querySelectorAll(".gallery-grid img");
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxTitle = document.getElementById("lightboxTitle");
+const lightboxDescription = document.getElementById("lightboxDescription");
+const lightboxCounter = document.getElementById("lightboxCounter");
+
+let currentIndex = 0;
+
+const images = Array.from(galleryImages).map(img => {
+  const card = img.closest(".media-card");
+  return {
+    src: img.src,
+    title: card.querySelector("h4").innerText,
+    desc: card.querySelector("p").innerText
+  };
+});
+
+function show(index){
+  if(index < 0) index = images.length - 1;
+  if(index >= images.length) index = 0;
+  currentIndex = index;
+
+  lightboxImage.src = images[index].src;
+  lightboxTitle.innerText = images[index].title;
+  lightboxDescription.innerText = images[index].desc;
+  lightboxCounter.innerText = `${index+1} / ${images.length}`;
+}
+
+galleryImages.forEach((img,i)=>{
+  img.onclick = () => {
+    show(i);
+    lightbox.classList.add("active");
+    document.body.style.overflow = "hidden";
+  };
+});
+
+document.getElementById("lightboxClose").onclick = () => {
+  lightbox.classList.remove("active");
+  document.body.style.overflow = "";
+};
+
+document.getElementById("lightboxPrev").onclick = () => show(currentIndex - 1);
+document.getElementById("lightboxNext").onclick = () => show(currentIndex + 1);
+
+document.addEventListener("keydown",(e)=>{
+  if(!lightbox.classList.contains("active")) return;
+
+  if(e.key==="Escape") lightbox.classList.remove("active");
+  if(e.key==="ArrowLeft") show(currentIndex - 1);
+  if(e.key==="ArrowRight") show(currentIndex + 1);
+});
+</script>
+
+</body>
+</html>
