@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FSAE EV Electrical & CAN System | Zach McEwen</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Vimeo embeds inside existing gallery cards */
+    .media-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 18px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
@@ -106,7 +116,7 @@
           </div>
           <div class="media-caption">
             <h4>Harness Build Detail</h4>
-            <p>The 12V power, ground, and CAN high and low are braided together branching off to devices to recieve both power and tie into the bus.</p>
+            <p>The 12V power, ground, and CAN high and low are braided together, branching off to devices to receive both power and tie into the bus.</p>
           </div>
         </article>
 
@@ -115,17 +125,20 @@
             <img src="media/fsae/simulated_battery_segments.jpg" alt="Battery simulation" />
           </div>
           <div class="media-caption">
-            <h4>Fake battery segments for BMS operaion</h4>
-            <p>The Battery management system expects voltage drops across battery segments, otherwise it will crowd the CANBUS with error messages. At the time of testing the battery was not available so we simulated this by powering 8 resistors with 30V and wires a voltage tap after each resistor.
+            <h4>Fake Battery Segments for BMS Operation</h4>
+            <p>The battery management system expects voltage drops across battery segments, otherwise it will crowd the CAN bus with error messages. At the time of testing the battery was not available, so we simulated this by powering eight resistors with 30 V and wiring a voltage tap after each resistor.</p>
           </div>
         </article>
 
         <article class="media-card full">
           <div class="media-frame">
-            <video controls preload="metadata">
-              <source src="media/fsae/website_overview.mp4" type="video/mp4" />
-              Your browser does not support video playback.
-            </video>
+            <iframe
+              src="https://player.vimeo.com/video/1174407069?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              title="website_overview"
+              allowfullscreen>
+            </iframe>
           </div>
           <div class="media-caption">
             <h4>CAN Diagnostics Interface</h4>
@@ -135,10 +148,29 @@
 
         <article class="media-card full">
           <div class="media-frame">
-            <video controls preload="metadata">
-              <source src="media/fsae/mc_explained.mp4" type="video/mp4" />
-              Your browser does not support video playback.
-            </video>
+            <iframe
+              src="https://player.vimeo.com/video/1174407038?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              title="update_motor"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="media-caption">
+            <h4>Motor Control Update</h4>
+            <p>Demonstration of motor control updates and live system interaction over the CAN network.</p>
+          </div>
+        </article>
+
+        <article class="media-card full">
+          <div class="media-frame">
+            <iframe
+              src="https://player.vimeo.com/video/1174406636?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              title="mc_explained"
+              allowfullscreen>
+            </iframe>
           </div>
           <div class="media-caption">
             <h4>Motor Controller Communication</h4>
@@ -148,14 +180,17 @@
 
         <article class="media-card full">
           <div class="media-frame">
-            <video controls preload="metadata">
-              <source src="media/fsae/9DOF.MOV" type="video/mp4" />
-              Your browser does not support video playback.
-            </video>
+            <iframe
+              src="https://player.vimeo.com/video/1174406545?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              title="9DOF"
+              allowfullscreen>
+            </iframe>
           </div>
-          <div class="9 Degree of Freedom Sensor">
-            <h4>Sensor Demonstration</h4>
-            <p>My groupmate walks through the implimentation of the 9DOF sensor to demonstrate how it will be used on the car.</p>
+          <div class="media-caption">
+            <h4>9 Degree of Freedom Sensor</h4>
+            <p>My groupmate walks through the implementation of the 9DOF sensor to demonstrate how it will be used on the car.</p>
           </div>
         </article>
 
@@ -163,10 +198,6 @@
     </div>
   </main>
 
-  <!-- =========================================================
-       FULLSCREEN IMAGE VIEWER / LIGHTBOX
-       This only applies to images, not videos.
-       ========================================================= -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose" aria-label="Close viewer">&times;</button>
 
@@ -190,35 +221,8 @@
   </div>
 
   <script>
-    /* =========================================================
-       FSAE PAGE LIGHTBOX SCRIPT
-       ---------------------------------------------------------
-       This script enables fullscreen image viewing for all
-       gallery photos on this page.
-
-       HOW IT WORKS:
-       1. It finds every image inside the gallery cards.
-       2. It reads the image path, title, and description
-          directly from the existing HTML.
-       3. When a user clicks a photo, that photo opens in a
-          fullscreen modal.
-       4. The left/right arrows move through the image set.
-       5. The title, description, and image counter update
-          automatically as the active image changes.
-       6. Videos are ignored and remain embedded in-page.
-       ========================================================= */
-
-    /* ---------------------------------------------------------
-       STEP 1: Find all image elements in the gallery.
-       We specifically target only <img> tags inside the
-       gallery cards, so videos are excluded automatically.
-       --------------------------------------------------------- */
     const galleryImages = document.querySelectorAll(".gallery-grid .media-card img");
 
-    /* ---------------------------------------------------------
-       STEP 2: Select the lightbox elements so we can update
-       them dynamically when the user clicks through images.
-       --------------------------------------------------------- */
     const lightbox = document.getElementById("lightbox");
     const lightboxImage = document.getElementById("lightboxImage");
     const lightboxTitle = document.getElementById("lightboxTitle");
@@ -228,16 +232,6 @@
     const lightboxPrev = document.getElementById("lightboxPrev");
     const lightboxNext = document.getElementById("lightboxNext");
 
-    /* ---------------------------------------------------------
-       STEP 3: Build an array of image metadata from the page.
-       Instead of manually creating a second list of image data,
-       we reuse the existing HTML structure:
-
-       - img src   -> image file path
-       - img alt   -> accessibility text
-       - h4        -> popup title
-       - p         -> popup description
-       --------------------------------------------------------- */
     const imageData = Array.from(galleryImages).map((img) => {
       const mediaCard = img.closest(".media-card");
       const titleElement = mediaCard.querySelector(".media-caption h4");
@@ -251,25 +245,8 @@
       };
     });
 
-    /* ---------------------------------------------------------
-       STEP 4: Track the current image index.
-       This tells us which image is being shown in the popup.
-       --------------------------------------------------------- */
     let currentImageIndex = 0;
 
-    /* ---------------------------------------------------------
-       STEP 5: Function to display a specific image.
-       This updates:
-       - the fullscreen image
-       - alt text
-       - title
-       - description
-       - image counter
-
-       It also wraps around:
-       - going left from first image jumps to last image
-       - going right from last image jumps to first image
-       --------------------------------------------------------- */
     function showImage(index) {
       if (index < 0) {
         currentImageIndex = imageData.length - 1;
@@ -288,42 +265,23 @@
       lightboxCounter.textContent = `${currentImageIndex + 1} / ${imageData.length}`;
     }
 
-    /* ---------------------------------------------------------
-       STEP 6: Open the lightbox.
-       This shows the fullscreen viewer and disables page
-       scrolling in the background for a cleaner experience.
-       --------------------------------------------------------- */
     function openLightbox(index) {
       showImage(index);
       lightbox.classList.add("active");
       document.body.style.overflow = "hidden";
     }
 
-    /* ---------------------------------------------------------
-       STEP 7: Close the lightbox.
-       This hides the popup and restores normal page scrolling.
-       --------------------------------------------------------- */
     function closeLightbox() {
       lightbox.classList.remove("active");
       document.body.style.overflow = "";
     }
 
-    /* ---------------------------------------------------------
-       STEP 8: Add click handlers to each gallery image.
-       Clicking a gallery photo opens that exact image in the
-       fullscreen viewer.
-       --------------------------------------------------------- */
     galleryImages.forEach((img, index) => {
       img.addEventListener("click", () => {
         openLightbox(index);
       });
     });
 
-    /* ---------------------------------------------------------
-       STEP 9: Arrow button navigation.
-       These buttons move backward or forward through the
-       image list.
-       --------------------------------------------------------- */
     lightboxPrev.addEventListener("click", () => {
       showImage(currentImageIndex - 1);
     });
@@ -332,29 +290,14 @@
       showImage(currentImageIndex + 1);
     });
 
-    /* ---------------------------------------------------------
-       STEP 10: Close button handler.
-       --------------------------------------------------------- */
     lightboxClose.addEventListener("click", closeLightbox);
 
-    /* ---------------------------------------------------------
-       STEP 11: Clicking the dark background closes the popup.
-       Clicking directly on the image or caption does not.
-       --------------------------------------------------------- */
     lightbox.addEventListener("click", (event) => {
       if (event.target === lightbox) {
         closeLightbox();
       }
     });
 
-    /* ---------------------------------------------------------
-       STEP 12: Keyboard support.
-       This makes the gallery feel much more polished:
-
-       - Escape     -> close popup
-       - ArrowLeft  -> previous image
-       - ArrowRight -> next image
-       --------------------------------------------------------- */
     document.addEventListener("keydown", (event) => {
       if (!lightbox.classList.contains("active")) return;
 
